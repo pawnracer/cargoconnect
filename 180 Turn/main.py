@@ -1,5 +1,7 @@
 #!/usr/bin/env pybricks-micropython
-
+"""
+This program makes the robot go forward 400 mm, turn 180 degrees, go in the other direction for 800 mm, turn 180 degrees, and go forward for 400 mm
+"""
 from ucollections import namedtuple
 import urandom
 
