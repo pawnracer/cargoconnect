@@ -12,6 +12,9 @@ from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 
 
+
+
+
 class baseMovement(object):
     def __init__(self, gyro, leftMotor, rightMotor, inverted):
         """
@@ -23,6 +26,7 @@ class baseMovement(object):
         self.rightMotor = rightMotor
         self.inverted = inverted
 
+        
 
     def gyroTankTurn(self, leftDegPerSec, rightDegPerSec, targetAngle, stopType = Stop.COAST, selfAdjust = 5):
         """
@@ -70,6 +74,7 @@ class baseMovement(object):
             return
 
 
+          
     def gyroSmartTurn(self, leftDegPerSec, rightDegPerSec, targetAngle, stopType = Stop.BRAKE, selfAdjust = 5):
         """
         Same as gyroTankTurn, but near the end of its turn, the robot slows to avoid overshooting. This allows us to turn at a higher speed
@@ -141,6 +146,7 @@ class baseMovement(object):
                 wait(5)
         self.robot.stop()
 
+        
 
     def gyroDriveCmBackward(self, distance, speed, ease, startSpeed=0):
         """
@@ -192,4 +198,4 @@ class baseMovement(object):
                     self.robot.drive(i, angle_correction)
                 wait(5)
         self.robot.stop()
-   
+  
