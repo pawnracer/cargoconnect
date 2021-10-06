@@ -31,24 +31,24 @@ gyro_sensor.reset_angle(0)
 
 PROPORTIONAL_GAIN = 1.1
 if distance > 0: # move forwards
-    while robot.distance() < distance:
-        angle_correction = -1 * PROPORTIONAL_GAIN * gyro_sensor.angle()
-        robot.drive(robotSpeed, angle_correction)
-        wait(5)
-    robot.stop()
-    robot.turn(210)
-    robot.stop()
-    robot.reset()
-    while robot.distance() < distance*2:
-        angle_correction = -1 * PROPORTIONAL_GAIN * gyro_sensor.angle()+195
-        robot.drive(robotSpeed, angle_correction)
+    while robot.distance()*-1 < distance:
+        angle_correction = PROPORTIONAL_GAIN * gyro_sensor.angle()
+        robot.drive(robotSpeed*-1, angle_correction)
         wait(5)
     robot.stop()
     robot.turn(-210)
     robot.stop()
     robot.reset()
-    while robot.distance() < distance:
-        angle_correction = -1 * PROPORTIONAL_GAIN * gyro_sensor.angle()
-        robot.drive(robotSpeed, angle_correction)
+    while robot.distance()*-1 < distance*2:
+        angle_correction = PROPORTIONAL_GAIN * gyro_sensor.angle()+195
+        robot.drive(robotSpeed*-1, angle_correction)
+        wait(5)
+    robot.stop()
+    robot.turn(210)
+    robot.stop()
+    robot.reset()
+    while robot.distance()*-1 < distance:
+        angle_correction = PROPORTIONAL_GAIN * gyro_sensor.angle()
+        robot.drive(robotSpeed*-1, angle_correction)
         wait(5)
 robot.stop()
