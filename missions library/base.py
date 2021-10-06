@@ -113,7 +113,7 @@ class baseMovement(object):
         self.gyro.reset_angle(0)
         PROPORTIONAL_GAIN = 0.011*speed
         deltaspeed=speed-startSpeed
-        rate=deltaspeed/(distance*0.1)
+        rate=deltaspeed/(distance*0.2)
         if ease == True:
             for i in range(startSpeed, speed, round(rate)):
                 PROPORTIONAL_GAIN = i*0.011
@@ -125,12 +125,12 @@ class baseMovement(object):
                     self.robot.drive(i*-1, angle_correction)
                 wait(5)
         if self.inverted==False:
-            while self.robot.distance() < distance*0.8:
+            while self.robot.distance() < distance*0.6:
                 angle_correction = -1 * PROPORTIONAL_GAIN * self.gyro.angle()
                 self.robot.drive(speed, angle_correction)
                 wait(5)
         elif self.inverted==True:
-            while self.robot.distance()*-1 < distance*0.8:
+            while self.robot.distance()*-1 < distance*0.6:
                 angle_correction = PROPORTIONAL_GAIN * self.gyro.angle()
                 self.robot.drive(speed*-1, angle_correction)
                 wait(5)
@@ -166,7 +166,7 @@ class baseMovement(object):
         self.gyro.reset_angle(0)
         PROPORTIONAL_GAIN = 0.011*speed
         deltaspeed=speed-startSpeed
-        rate=deltaspeed/(distance*0.1)
+        rate=deltaspeed/(distance*0.2)
         if ease == True:
             for i in range(startSpeed, speed, round(rate)):
                 PROPORTIONAL_GAIN = i*0.011
@@ -178,12 +178,12 @@ class baseMovement(object):
                     self.robot.drive(i, angle_correction)
                 wait(5)
         if self.inverted==False:
-            while self.robot.distance() > distance*-0.8:
+            while self.robot.distance() > distance*-0.6:
                 angle_correction = -1 * PROPORTIONAL_GAIN * self.gyro.angle()
                 self.robot.drive(speed*-1, angle_correction)
                 wait(5)
         elif self.inverted==True:
-            while self.robot.distance()*-1 > distance*-0.8:
+            while self.robot.distance()*-1 > distance*-0.6:
                 angle_correction = PROPORTIONAL_GAIN * self.gyro.angle()
                 self.robot.drive(speed, angle_correction)
                 wait(5)
