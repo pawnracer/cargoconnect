@@ -95,9 +95,9 @@ class baseMovement(object):
         self.gyroTankTurn(leftDegPerSec/2, rightDegPerSec/2, targetAngle, stopType, selfAdjust)
 
 
-    def gyroDriveCm(self, distance, speed, ease, startSpeed=0):
+    def gyroDriveMm(self, distance, speed, ease, startSpeed=0):
         """
-        Drives toward a direction for a specific distance, in centimeters, using a gyro.
+        Drives toward a direction for a specific distance, in millimeters, using a gyro.
 
         Parameters:
         distance(float): In cm, how far we drive for
@@ -148,9 +148,9 @@ class baseMovement(object):
 
         
 
-    def gyroDriveCmBackward(self, distance, speed, ease, startSpeed=0):
+    def gyroDriveMmBackward(self, distance, speed, ease, startSpeed=0):
         """
-        Drives toward a direction for a specific distance, backwards, in centimeters, using a gyro.
+        Drives toward a direction for a specific distance, backwards, in millimeters, using a gyro.
 
         Parameters:
         distance(float): In cm, how far we drive for
