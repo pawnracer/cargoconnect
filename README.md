@@ -1,4 +1,4 @@
-# cargoconnect
-FLL Cargoconnect colloborative programming
+# Fll Cargo Connect 2021
+FLL Cargo Connect colloborative programming
 
-This is the colloborative programming page for my team(Mechanical Zen)
+This is the colloborative programming page for my team (Mechanical Zen)
