@@ -198,4 +198,3 @@ class baseMovement(object):
                     self.robot.drive(i, angle_correction)
                 wait(5)
         self.robot.stop()
-  
