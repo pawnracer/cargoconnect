@@ -1,7 +1,7 @@
 #!/usr/bin/env pybricks-micropython
 
 """
-This program contains basic gyro driving function such as gyroTankTurn and gyroDriveCm..
+This program contains basic gyro driving function such as gyroTankTurn and gyroDriveCm.
 """
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
