@@ -28,15 +28,14 @@ class baseMovement(object):
 
     def gyroDrive(self, PROPORTIONAL_GAIN, init_angle, distance, speed):
         self.robot = DriveBase(self.leftMotor, self.rightMotor, wheel_diameter=92.5, axle_track=115)
-        while abs(self.robot.distance()) < abs(distance):
-            angle_correction = -1 * PROPORTIONAL_GAIN * self.gyro.angle()+ init_angle
-            print("gyro angle "+ str(self.gyro.angle()))
-            print("Distance of robot is " + str(self.robot.distance()))
-            if self.inverted==False:
-                self.robot.drive(speed, angle_correction)
-            if self.inverted==True:
-                self.robot.drive(speed*-1, angle_correction)    
-
+        
+        angle_correction = -1 * PROPORTIONAL_GAIN * self.gyro.angle()+ init_angle
+        print("gyro angle "+ str(self.gyro.angle()))
+        print("Distance of robot is " + str(self.robot.distance()))
+        if self.inverted==False:
+            self.robot.drive(speed, angle_correction)
+        if self.inverted==True:
+            self.robot.drive(speed*-1, angle_correction)
         
 
     def gyroTankTurn(self, leftDegPerSec, rightDegPerSec, targetAngle, stopType = Stop.COAST, selfAdjust = 5):
@@ -106,14 +105,12 @@ class baseMovement(object):
         self.gyroTankTurn(leftDegPerSec/2, rightDegPerSec/2, targetAngle, stopType, selfAdjust)
 
 
-    def gyroDriveMmEase(self, distance, speed, ease, startSpeed=0):
+    def gyroDriveMmEase(self, distance, speed):
         """
-        Drives toward a direction for a specific distance, in millimeters, using a gyro.
+        Drives toward a direction for a specific distance, in millimeters while easing, using a gyro.
         Parameters:
         distance(float): In mm, how far we drive for
         speed(int): Speed in mm/sec
-        ease(bool): Whether to ease or not
-        startSpeet(int): The speed to start at if you are easing.
         Returns:
         None
         """
@@ -121,32 +118,46 @@ class baseMovement(object):
         self.robot.reset()
         self.gyro.reset_angle(0)
         PROPORTIONAL_GAIN = 0.011*speed
-        deltaspeed=speed-startSpeed
-        rate=deltaspeed/(distance*0.2)
-
-        if inverted==True:
-            speed*=-1
-
-        if ease == True:
-            for i in range(startSpeed, speed, round(rate)):
+        rate=speed/(distance*0.2)
+        if speed>0:
+            for i in range(0, speed, round(rate)):
                 PROPORTIONAL_GAIN = i*0.011
-                self.gyroDrive(PROPORTIONAL_GAIN, 0, distance, speed)
+                self.gyroDrive(PROPORTIONAL_GAIN, 0, distance*0.2, i)
                 wait(5)
-                
-        self.gyroDrive(PROPORTIONAL_GAIN, 0, distance*0.6, speed)
-        if ease == True:
-            for i in reversed(range(startSpeed, speed, round(rate))):
+            self.gyroDrive(PROPORTIONAL_GAIN, 0, distance*0.6, speed)
+            for i in reversed(range(0, speed, round(rate))):
                 PROPORTIONAL_GAIN = i*0.011
-                self.gyroDrive(PROPORTIONAL_GAIN, 0, distance, speed)
+                self.gyroDrive(PROPORTIONAL_GAIN, 0, distance*0.2, speed)
+                wait(5)
+        elif speed<0:
+            for i in range(0, speed, round(rate)):
+                PROPORTIONAL_GAIN = i*0.011
+                self.gyroDrive(PROPORTIONAL_GAIN, 0, distance*0.2, -1*i)
+                wait(5)
+            self.gyroDrive(PROPORTIONAL_GAIN, 0, distance*0.6, speed)
+            for i in reversed(range(0, speed, round(rate))):
+                PROPORTIONAL_GAIN = i*0.011
+                self.gyroDrive(PROPORTIONAL_GAIN, 0, distance*0.2, -1*i)
                 wait(5)
         self.robot.stop()
 
-    def gyroDriveCm1(self, distance, speed):
+    def gyroDriveMm(self, distance, speed):
+        """
+        Drives toward a direction for a specific distance, in millimeters, using a gyro.
+        Parameters:
+        distance(float): In mm, how far we drive for
+        speed(int): Speed in mm/sec
+        Returns:
+        None
+        """
         self.robot = DriveBase(self.leftMotor, self.rightMotor, wheel_diameter=92.5, axle_track=115)
         self.robot.reset()
         self.gyro.reset_angle(0)
+        angle_correction = -1 * (0.011*speed) * self.gyro.angle()
         PROPORTIONAL_GAIN = 0.011*speed
-        self.gyroDrive(PROPORTIONAL_GAIN, 0, distance, speed)
+        while abs(self.robot.distance())<abs(distance):
+            self.robot.drive(speed, angle_correction)
+        self.robot.stop
 
     def gyroDriveMmBackward(self, distance, speed, ease, startSpeed=0):
         """
