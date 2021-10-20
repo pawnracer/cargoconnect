@@ -1,5 +1,4 @@
 #!/usr/bin/env pybricks-micropython
-
 """
 This program contains basic gyro driving function such as gyroTankTurn and gyroDriveCm.
 """
@@ -10,7 +9,6 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
-
 class baseMovement(object):
     def __init__(self, gyro, leftMotor, rightMotor, inverted):
         """
@@ -24,8 +22,7 @@ class baseMovement(object):
         self.robot = DriveBase(self.leftMotor, self.rightMotor, wheel_diameter=92.5, axle_track=115)
     def gyroDrive(self, PROPORTIONAL_GAIN, init_angle, distance, speed):
         direction = 1 if self.inverted else -1
-        try: 
-            
+        try:
             angle_correction = direction * (abs(speed)/speed) * PROPORTIONAL_GAIN * self.gyro.angle()+ init_angle
             self.robot.drive(speed*direction*-1, angle_correction)
         except:
