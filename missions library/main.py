@@ -18,6 +18,8 @@ ev3 = EV3Brick()
 gs=GyroSensor(Port.S4)
 lm=Motor(Port.B)
 rm=Motor(Port.C)
+fm=Motor(Port.A)
+bm=Motor(Port.D)
 m=Missions(gyro=gs, leftMotor=lm, rightMotor=rm, inverted=True)
 
 # Write your program here.
