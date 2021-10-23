@@ -128,4 +128,4 @@ class baseMovement(object):
         PROPORTIONAL_GAIN = 0.011*speed
         while abs(self.robot.distance())<abs(distance):
             self.gyroDrive(PROPORTIONAL_GAIN, 0, distance, speed)
-        self.robot.stop
+        self.robot.stop()
