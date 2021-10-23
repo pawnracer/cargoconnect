@@ -88,6 +88,23 @@ class baseMovement(object):
         midAngle = self.gyro.angle() + (targetAngle - self.gyro.angle()) * 0.80
         self.gyroTankTurn(leftDegPerSec, rightDegPerSec, midAngle, Stop.COAST, False)
         self.gyroTankTurn(leftDegPerSec/2, rightDegPerSec/2, targetAngle, stopType, selfAdjust)
+    def gyroDriveMm(self, distance, speed):
+        """
+        Drives toward a direction for a specific distance, in millimeters, using a gyro.
+        Parameters:
+        distance(float): In mm, how far we drive for
+        speed(int): Speed in mm/sec
+        Returns:
+        None
+        """
+        
+        self.robot.reset()
+        self.gyro.reset_angle(0)
+        angle_correction = -1 * (0.011*speed) * self.gyro.angle()
+        PROPORTIONAL_GAIN = 0.011*speed
+        while abs(self.robot.distance())<abs(distance):
+            self.gyroDrive(PROPORTIONAL_GAIN, 0, distance, speed)
+        self.robot.stop()
     def gyroDriveMmEase(self, distance, speed):
         """
         Drives toward a direction for a specific distance, in millimeters while easing, using a gyro.
@@ -111,21 +128,4 @@ class baseMovement(object):
             PROPORTIONAL_GAIN = i*0.011
             self.gyroDrive(PROPORTIONAL_GAIN, 0, distance*0.2, i)
             wait(5)
-        self.robot.stop()
-    def gyroDriveMm(self, distance, speed):
-        """
-        Drives toward a direction for a specific distance, in millimeters, using a gyro.
-        Parameters:
-        distance(float): In mm, how far we drive for
-        speed(int): Speed in mm/sec
-        Returns:
-        None
-        """
-        
-        self.robot.reset()
-        self.gyro.reset_angle(0)
-        angle_correction = -1 * (0.011*speed) * self.gyro.angle()
-        PROPORTIONAL_GAIN = 0.011*speed
-        while abs(self.robot.distance())<abs(distance):
-            self.gyroDrive(PROPORTIONAL_GAIN, 0, distance, speed)
         self.robot.stop()
