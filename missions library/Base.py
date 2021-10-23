@@ -1,4 +1,7 @@
 #!/usr/bin/env pybricks-micropython
+"""
+This program contains basic gyro driving function such as gyroTankTurn and gyroDriveCm.
+"""
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
                                  InfraredSensor, UltrasonicSensor, GyroSensor)
@@ -6,13 +9,8 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
-
-
-"""
-This program contains basic gyro driving function such as gyroTankTurn and gyroDriveCm.
-"""
-class baseMovement(object):
-    def __init__(self, gyro, leftMotor, rightMotor, inverted):
+class Base(DriveBase):
+    def __init__(self, gyro, leftMotor, rightMotor, wheel_diameter, axle_track, inverted):
         """
         IMPORTANT:
         if you motors are inverted, set inverted to True
@@ -21,12 +19,12 @@ class baseMovement(object):
         self.leftMotor = leftMotor
         self.rightMotor = rightMotor
         self.inverted = inverted
-        self.robot = DriveBase(self.leftMotor, self.rightMotor, wheel_diameter=92.5, axle_track=115)
+        super().__init__(leftMotor, rightMotor, wheel_diameter, axle_track)
     def gyroDrive(self, PROPORTIONAL_GAIN, init_angle, distance, speed):
         direction = 1 if self.inverted else -1
-        try:
+        try: 
             angle_correction = direction * (abs(speed)/speed) * PROPORTIONAL_GAIN * self.gyro.angle()+ init_angle
-            self.robot.drive(speed*direction*-1, angle_correction)
+            self.drive(speed*direction*-1, angle_correction)
         except:
             return
     def gyroTankTurn(self, leftDegPerSec, rightDegPerSec, targetAngle, stopType = Stop.COAST, selfAdjust = 5):
@@ -36,7 +34,7 @@ class baseMovement(object):
         leftDegPerSec(int): In degrees, how fast the left motor moves
         rightDegPerSec(int): In degrees, how fast the right motor moves       
         targetAngle(int): The angle that the robot will turn to
-        stopType(string): Whether the robot will break or it will coast
+        stopType(string): Whether the robot will brake or it will coast
         selfAdjust(int): In degrees, if the overshoot is more than the selfAdjust angle, then we turn back
         
         Returns:
@@ -78,7 +76,7 @@ class baseMovement(object):
         leftDegPerSec(int): In degrees, how fast the left motor moves
         rightDegPerSec(int): In degrees, how fast the right motor moves       
         targetAngle(int): The angle that the robot will turn to
-        stopType(string): Whether the robot will break or it will coast
+        stopType(string): Whether the robot will brake or it will coast
         selfAdjust(int): In degrees, if the overshoot is more than the selfAdjust angle, then we turn back
         
         Returns:
@@ -98,13 +96,13 @@ class baseMovement(object):
         None
         """
         
-        self.robot.reset()
+        self.reset()
         self.gyro.reset_angle(0)
         angle_correction = -1 * (0.011*speed) * self.gyro.angle()
         PROPORTIONAL_GAIN = 0.011*speed
-        while abs(self.robot.distance())<abs(distance):
+        while abs(self.distance())<abs(distance):
             self.gyroDrive(PROPORTIONAL_GAIN, 0, distance, speed)
-        self.robot.stop()
+        self.stop()
     def gyroDriveMmEase(self, distance, speed):
         """
         Drives toward a direction for a specific distance, in millimeters while easing, using a gyro.
@@ -114,8 +112,7 @@ class baseMovement(object):
         Returns:
         None
         """
-        self.robot = DriveBase(self.leftMotor, self.rightMotor, wheel_diameter=92.5, axle_track=115)
-        self.robot.reset()
+        self.reset()
         self.gyro.reset_angle(0)
         PROPORTIONAL_GAIN = 0.011*speed
         rate=speed/(distance*0.2)
@@ -128,4 +125,4 @@ class baseMovement(object):
             PROPORTIONAL_GAIN = i*0.011
             self.gyroDrive(PROPORTIONAL_GAIN, 0, distance*0.2, i)
             wait(5)
-        self.robot.stop()
+        self.stop()
