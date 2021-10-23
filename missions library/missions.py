@@ -10,7 +10,7 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
-from base import baseMovement
+from Base import Base
 
 
 # This program requires LEGO EV3 MicroPython v2.0 or higher.
@@ -20,23 +20,37 @@ from base import baseMovement
 
 
 # Write your program here.
-class Missions(object):
-    def __init__(self, gyro, leftMotor, rightMotor, inverted):
+class Missions:
+    def __init__(self, gyro, leftMotor, rightMotor, medMotor1, medMotor2, inverted):
         self.gyro = gyro
         self.leftMotor = leftMotor
         self.rightMotor = rightMotor
         self.inverted = inverted
-        self.bm=baseMovement(gyro=self.gyro, leftMotor=self.leftMotor, rightMotor=self.rightMotor, inverted=self.inverted)
+        self.m1=medMotor1
+        self.m2=medMotor2
+        self.b=Base(gyro=self.gyro, leftMotor=self.leftMotor, rightMotor=self.rightMotor, wheel_diameter=92.5, axle_track=115, inverted=self.inverted)
     def test(self):
         self.gyro.reset_angle(0)
-        self.bm.gyroSmartTurn(leftDegPerSec=200, rightDegPerSec=-200, targetAngle=90, selfAdjust=1)
-        wait(200)
-        self.bm.gyroSmartTurn(leftDegPerSec=-200, rightDegPerSec=200, targetAngle=0, selfAdjust=1)
-        wait(200)
-        self.bm.gyroDriveMm(distance=400, speed=100)
-        wait(200)
-        self.bm.gyroDriveMm(distance=-400, speed=-100)
-        wait(200)
-        self.bm.gyroDriveMmEase(distance=1000, speed=200)
-        wait(200)
-        self.bm.gyroDriveMmEase(distance=1000, speed=-200)
+        self.b.gyroSmartTurn(leftDegPerSec=200, rightDegPerSec=-200, targetAngle=90, selfAdjust=1)
+        wait(300)
+        self.b.gyroSmartTurn(leftDegPerSec=-200, rightDegPerSec=200, targetAngle=0, selfAdjust=1)
+        wait(300)
+        self.b.gyroDriveMm(distance=400, speed=100)
+        wait(300)
+        self.b.gyroDriveMm(distance=-400, speed=-100)
+        wait(300)
+        self.b.gyroDriveMmEase(distance=1000, speed=200)
+        wait(300)
+        self.b.gyroDriveMmEase(distance=1000, speed=-200)
+    def sort(self):
+        """self.m1.run_until_stalled(-400)
+        wait(100)
+        self.m1.reset_angle(0)
+        self.m1.run_target(400, 600)
+        self.m1.reset_angle(0)
+        self.m1.run_target(400, 800)"""
+        self.b.gyroDriveMmEase(distance=500, speed=400)
+        self.b.gyroSmartTurn(leftDegPerSec=-150, rightDegPerSec=150, targetAngle=-45)
+        self.b.gyroDriveMm(distance=150, speed=100)
+        self.b.gyroSmartTurn(leftDegPerSec=150, rightDegPerSec=-150, targetAngle=45)
+        self.b.gyroDriveMmEase(distance=1000, speed=400)
