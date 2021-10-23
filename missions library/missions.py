@@ -42,15 +42,3 @@ class Missions:
         self.b.gyroDriveMmEase(distance=1000, speed=200)
         wait(300)
         self.b.gyroDriveMmEase(distance=1000, speed=-200)
-    def sort(self):
-        """self.m1.run_until_stalled(-400)
-        wait(100)
-        self.m1.reset_angle(0)
-        self.m1.run_target(400, 600)
-        self.m1.reset_angle(0)
-        self.m1.run_target(400, 800)"""
-        self.b.gyroDriveMmEase(distance=500, speed=400)
-        self.b.gyroSmartTurn(leftDegPerSec=-150, rightDegPerSec=150, targetAngle=-45)
-        self.b.gyroDriveMm(distance=150, speed=100)
-        self.b.gyroSmartTurn(leftDegPerSec=150, rightDegPerSec=-150, targetAngle=45)
-        self.b.gyroDriveMmEase(distance=1000, speed=400)
