@@ -44,17 +44,17 @@ class Missions:
         self.b.gyroDriveMmEase(distance=1000, speed=-200)
     def parking(self):
         self.gyro.reset_angle(0)
-        self.bm.gyroTankTurn(200,-200, 55)
+        self.b.gyroTankTurn(200,-200, 55)
         distance=900
         speed=500
-        self.bm.gyroDriveMm(distance, speed)
-        self.bm.gyroTankTurn(-200,200, -55)
+        self.b.gyroDriveMm(distance, speed)
+        self.b.gyroTankTurn(-200,200, -55)
         distance=330
         speed=200
-        self.bm.gyroDriveMm(distance, speed)
-        self.bm.gyroTankTurn(-200,200, -90)
+        self.b.gyroDriveMm(distance, speed)
+        self.b.gyroTankTurn(-200,200, -90)
         distance=200
         speed=50
-        self.bm.gyroDriveMm(distance, speed)
+        self.b.gyroDriveMm(distance, speed)
         distance=-40
         speed=10
