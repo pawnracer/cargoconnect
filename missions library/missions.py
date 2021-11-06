@@ -58,3 +58,30 @@ class Missions:
         self.b.gyroDriveMm(distance, speed)
         distance=-40
         speed=10
+  def m_11(self):
+        """ package delivery """
+
+        """mission logic
+            1. drive gyro straight x distance from home
+            2. turn right by 90 degrees
+            3. drive gyro straight y distance
+            4. turn left 90 degrees
+            5. drive gyro straight z distance to drop package
+            5. drive backwards z distance
+            6. turn left 90 degrees
+            7. drive gyro straight y distance  
+        """
+        x = -400
+        y = -50
+        z = -30
+       
+        self.gyro.reset_angle(0)
+       
+        self.b.gyroDriveMm(distance=x, speed=100)
+        self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=90, selfAdjust=1)
+        self.b.gyroDriveMm(distance=y, speed=100)
+        self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=0, selfAdjust=1)
+        self.b.gyroDriveMm(distance=z, speed=100)
+        self.b.gyroDriveMm(distance=-z, speed=100)
+        self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=-90, selfAdjust=1)    
+        self.b.gyroDriveMm(distance=-y, speed=100)
