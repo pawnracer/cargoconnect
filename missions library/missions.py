@@ -1,5 +1,4 @@
 #!/usr/bin/env pybricks-micropython
-
 """
 This program uses the basic driving functions to do missions. Add more functions as needed.
 """
@@ -31,9 +30,9 @@ class Missions:
         self.b=Base(gyro=self.gyro, leftMotor=self.leftMotor, rightMotor=self.rightMotor, wheel_diameter=92.5, axle_track=115, inverted=self.inverted)
     def test(self):
         self.gyro.reset_angle(0)
-        self.b.gyroSmartTurn(leftDegPerSec=200, rightDegPerSec=-200, targetAngle=90, selfAdjust=1)
+        self.b.gyroSmartTurn(leftDegPerSec=100, rightDegPerSec=-100, targetAngle=90, selfAdjust=1)
         wait(300)
-        self.b.gyroSmartTurn(leftDegPerSec=-200, rightDegPerSec=200, targetAngle=0, selfAdjust=1)
+        self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=0, selfAdjust=1)
         wait(300)
         self.b.gyroDriveMm(distance=400, speed=100)
         wait(300)
