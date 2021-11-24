@@ -42,6 +42,14 @@ class Missions:
         self.b.gyroDriveMmEase(distance=1000, speed=200)
         wait(300)
         self.b.gyroDriveMmEase(distance=1000, speed=-200)
+        wait(300)
+        self.m1.run_target(speed=200, target_angle=200)
+        wait(300)
+        self.m1.run_target(speed=200, target_angle=0)
+        wait(300)
+        self.m2.run_target(speed=200, target_angle=200)
+        wait(300)
+        self.m2.run_target(speed=200, target_angle=0)
     def parking(self):
         self.gyro.reset_angle(0)
         self.b.gyroTankTurn(200,-200, 55)
@@ -58,7 +66,7 @@ class Missions:
         self.b.gyroDriveMm(distance, speed)
         distance=-40
         speed=10
-  def m_11(self):
+    def m_11(self):
         """ package delivery """
 
         """mission logic
@@ -74,9 +82,9 @@ class Missions:
         x = -400
         y = -50
         z = -30
-       
+
         self.gyro.reset_angle(0)
-       
+
         self.b.gyroDriveMm(distance=x, speed=100)
         self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=90, selfAdjust=1)
         self.b.gyroDriveMm(distance=y, speed=100)
