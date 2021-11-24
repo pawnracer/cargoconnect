@@ -1,4 +1,7 @@
 #!/usr/bin/env pybricks-micropython
+"""
+This program calls the functions defined in the missions.py
+"""
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor,
                                  InfraredSensor, UltrasonicSensor, GyroSensor)
@@ -20,7 +23,7 @@ lm=Motor(Port.B)
 rm=Motor(Port.C)
 fm=Motor(Port.A)
 bm=Motor(Port.D)
-m=Missions(gyro=gs, leftMotor=lm, rightMotor=rm, inverted=True)
+m=Missions(gyro=gs, leftMotor=lm, rightMotor=rm, medMotor1=fm, medMotor2=bm, inverted=True)
 
 # Write your program here.
 m.test()
