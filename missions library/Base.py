@@ -42,6 +42,7 @@ class Base(DriveBase):
     
         """
         direction = -1 if self.inverted else 1
+        self.gyto.reset_angle(0)
         currAngle = self.gyro.angle()
         isTurnRight = currAngle < targetAngle
         self.leftMotor.run(leftDegPerSec*direction)
