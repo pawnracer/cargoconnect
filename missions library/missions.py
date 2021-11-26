@@ -92,3 +92,13 @@ class Missions:
         self.b.gyroDriveMm(distance=-z, speed=100)
         self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=-90, selfAdjust=1)    
         self.b.gyroDriveMm(distance=-y, speed=100)
+    def push_it_out(self):
+        self.gyro.reset_angle(0)
+        distance= 425        
+        speed=200
+        self.b.gyroDriveMm(distance, speed)
+        self.b.gyroTankTurn(-500,500, -45)
+        self.b.gyroTankTurn(200,-200, 45)
+        distance=200
+        speed=500
+        self.b.gyroDriveMm(distance,speed)  
