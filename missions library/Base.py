@@ -126,3 +126,21 @@ class Base(DriveBase):
             self.gyroDrive(PROPORTIONAL_GAIN, 0, distance*0.2, i)
             wait(5)
         self.stop()
+    def gyroDriveMm_with_medium_motors(self, distance, speed,speedofmotor, time):
+        """
+        Drives toward a direction for a specific distance, in millimeters, using a gyro.
+        Parameters:
+        distance(float): In mm, how far we drive for
+        speed(int): Speed in mm/sec
+        Returns:
+        None
+        """
+        
+        self.reset()
+        self.gyro.reset_angle(0)
+        angle_correction = -1 * (0.011*speed) * self.gyro.angle()
+        PROPORTIONAL_GAIN = 0.011*speed
+        while abs(self.distance())<abs(distance):
+            self.gyroDrive(PROPORTIONAL_GAIN, 0, distance, speed)
+            self.medMotor1.run_time(speedofmotor, time)
+        self.stop()
