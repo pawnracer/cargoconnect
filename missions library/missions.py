@@ -20,13 +20,12 @@ from Base import Base
 
 # Write your program here.
 class Missions:
-    def __init__(self, gyro, leftMotor, rightMotor, medMotor1, medMotor2, inverted):
+    def __init__(self, gyro, leftMotor, rightMotor, medMotor1, inverted):
         self.gyro = gyro
         self.leftMotor = leftMotor
         self.rightMotor = rightMotor
         self.inverted = inverted
         self.m1=medMotor1
-        self.m2=medMotor2
         self.b=Base(gyro=self.gyro, leftMotor=self.leftMotor, rightMotor=self.rightMotor, wheel_diameter=92.5, axle_track=115, inverted=self.inverted)
     def test(self):
         self.gyro.reset_angle(0)
@@ -66,39 +65,120 @@ class Missions:
         distance=-40
         speed=10
     def m_11(self):
-        """ package delivery """
-
-        """mission logic
-            1. drive gyro straight x distance from home
-            2. turn right by 90 degrees
-            3. drive gyro straight y distance
-            4. turn left 90 degrees
-            5. drive gyro straight z distance to drop package
-            5. drive backwards z distance
-            6. turn left 90 degrees
-            7. drive gyro straight y distance  
-        """
-        x = -400
+        x = -1085 #1150
         y = -50
-        z = -30
-
+        z = -200
+       
         self.gyro.reset_angle(0)
-
-        self.b.gyroDriveMm(distance=x, speed=100)
-        self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=90, selfAdjust=1)
-        self.b.gyroDriveMm(distance=y, speed=100)
-        self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=0, selfAdjust=1)
-        self.b.gyroDriveMm(distance=z, speed=100)
-        self.b.gyroDriveMm(distance=-z, speed=100)
-        self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=-90, selfAdjust=1)    
-        self.b.gyroDriveMm(distance=-y, speed=100)
-    def push_it_out(self):
+       
+        self.b.gyroDriveMm(distance=x, speed=200)
+        """ turn right 90 degrees """
+        
+        self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=-45, selfAdjust=1)
+        self.b.gyroDriveMm(distance=100, speed=100)
+        #moving back
+        self.b.gyroDriveMm(distance=-150, speed=-50)
+        #right turn
+        self.b.gyroSmartTurn(leftDegPerSec=100, rightDegPerSec=-100, targetAngle=75, selfAdjust=1)
+        #drive
+        self.b.gyroDriveMm(distance=280, speed=100)
+        #left turn
+        self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=-40, selfAdjust=1)
+        #final turn
+        self.b.gyroDriveMm(distance=200, speed=100)
+        wait(1000)
+        self.b.gyroDriveMm(distance=-200, speed=-100)
+        #left turn
+        self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=-120, selfAdjust=1)
+        #drive
+        self.b.gyroDriveMm(distance=275, speed=100)
+        #left turn
+        self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=-25, selfAdjust=1)
+        #drive home
+        self.b.gyroDriveMm(distance=x, speed=200)
+    def turbine_blade(self):
+        self.b.gyroDriveMm(distance=600, speed=200)
+        self.b.gyroDriveMm(distance=210, speed=-200)
+        self.b.gyroDriveMm(distance=260, speed=200)
+        self.b.gyroDriveMm(distance=1000, speed=-500)
+    def platooning(self):
+        self.b.gyroDriveMm(373.25, 250)
+        self.b.gyroTankTurn(100, -100, 87, selfAdjust = 500)
+        self.b.gyroDriveMmEase(1000, 300)
+        wait(5)
+        self.b.gyroDriveMm(-200, -200)
+        self.b.gyroTankTurn(-45, 45, -30)
+        self.b.gyroDriveMm(780, 240)
+        self.b.gyroTankTurn(50, -50, 20)
         self.gyro.reset_angle(0)
-        distance= 425        
-        speed=200
-        self.b.gyroDriveMm(distance, speed)
-        self.b.gyroTankTurn(-500,500, -45)
-        self.b.gyroTankTurn(200,-200, 45)
-        distance=200
-        speed=500
-        self.b.gyroDriveMm(distance,speed)  
+        self.b.gyroDriveMm(500, 150)
+        self.b.gyroDriveMm(-300, -90)
+        self.b.gyroTankTurn(90, -90, 45)
+        self.gyro.reset_angle(0)
+        self.b.gyroDriveMm(360, 175)
+        self.b.gyroTankTurn(180, -180, 100)
+        self.gyro.reset_angle(0)
+        self.b.gyroTankTurn(-180, 180, -125)
+        self.gyro.reset_angle(0)
+        self.b.gyroDriveMm(500, 200)
+        self.b.gyroDriveMm(150, 500)
+        self.b.gyroTankTurn(45, -45, 5)
+        self.gyro.reset_angle(0)
+        self.b.gyroDriveMm(-200, -100)
+        self.b.gyroTankTurn(-90, 90, -95)
+        self.b.gyroDriveMm(350, 200)
+        self.b.gyroTankTurn(90, -90, 90)
+        self.gyro.reset_angle(0)
+        self.b.gyroDriveMm(100, 100)
+        self.b.gyroTankTurn(1000, -1000, 90)
+        self.gyro.reset_angle(0)
+    def Cargo_door_and_Mission06(self):
+        self.gyro.reset_angle(0)
+        self.b.gyroDriveMm(200,200)
+        self.b.gyroDriveMm(650,300)    
+        self.b.gyroTankTurn(200,-200,85)
+        self.b.gyroDriveMm(300,300)
+        self.b.gyroDriveMm(-100,-200)
+        self.b.gyroTankTurn(-200,200,-70)
+        self.b.gyroDriveMm(-150,-200)
+        self.b.gyroTankTurn(-200,200,-42)   
+        self.b.gyroDriveMm(100,100)
+        self.b.gyroDriveMm_with_medium_motors(-130,-50,-100,300)
+        self.medMotor1.run_time(100,1700)
+        self.b.gyroDriveMm(50,100)
+        self.b.gyroTankTurn(200,-200,50)
+        self.b.gyroDriveMm(-300,-300)
+        self.medMotor1.run_time(-100,1700)
+        self.b.gyroTankTurn(-400,400,-120)
+        self.medMotor1.run_time(100,1700)
+        self.gyro.reset_angle(0)
+        self.b.gyroTankTurn(200,-200,150)
+        self.b.gyroDriveMm(250,200) 
+        self.medMotor1.run_time(-100,2000)
+        self.b.gyroTankTurn(-200,200,-90)
+        self.medMotor1.run_time(100,1700)
+        self.b.gyroDriveMm(200,100)
+        self.b.gyroDriveMm(-400,-200)
+        self.b.gyroTankTurn(200,-200,60)
+        self.b.gyroDriveMm(300,200)
+    def m_9_10(self):
+        #going to the upper part of the board
+        self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=-90, selfAdjust=1)
+        self.b.gyroDriveMm(distance=410, speed=100)
+        self.b.gyroSmartTurn(leftDegPerSec=100, rightDegPerSec=-100, targetAngle=90, selfAdjust=1)
+        self.b.gyroDriveMm(distance=1500, speed=100)
+        self.b.gyroSmartTurn(leftDegPerSec=100, rightDegPerSec=-100, targetAngle=90, selfAdjust=1)
+        #picking up the containor
+        self.m1.run(speed=-200)
+        self.m1.run_until_stalled(-100, duty_limit=50)
+        self.m1.reset_angle(0)
+        self.b.gyroDriveMm(distance=400, speed=100)
+        self.m1.run_target(300, 800)
+        self.b.gyroDriveMm(distance=-400, speed=-100)
+        self.m1.reset_angle(0)
+        #going home
+        self.b.gyroDriveMm(distance=200, speed=-50)
+        self.b.gyroSmartTurn(leftDegPerSec=100, rightDegPerSec=-100, targetAngle=180, selfAdjust=1)
+        self.b.gyroDriveMm(distance=100, speed=100)
+        self.b.gyroSmartTurn(leftDegPerSec=-100, rightDegPerSec=100, targetAngle=-90, selfAdjust=1)
+        self.b.gyroDriveMm(distance=1700, speed=100)
