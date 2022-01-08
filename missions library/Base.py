@@ -10,7 +10,7 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 class Base(DriveBase):
-    def __init__(self, gyro, leftMotor, rightMotor, wheel_diameter, axle_track, inverted):
+    def __init__(self, gyro, leftMotor, rightMotor, wheel_diameter, axle_track, fm=fm, inverted):
         """
         IMPORTANT:
         if you motors are inverted, set inverted to True
@@ -19,6 +19,7 @@ class Base(DriveBase):
         self.leftMotor = leftMotor
         self.rightMotor = rightMotor
         self.inverted = inverted
+        self.medMotor1 = fm
         super().__init__(leftMotor, rightMotor, wheel_diameter, axle_track)
     def gyroDrive(self, PROPORTIONAL_GAIN, init_angle, distance, speed):
         direction = 1 if self.inverted else -1
